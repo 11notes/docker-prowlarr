@@ -1,0 +1,23 @@
+name: "arrs"
+services:
+  prowlarr:
+    image: "11notes/prowlarr:1.35.1"
+    read_only: true
+    environment:
+      TZ: "Europe/Zurich"
+    volumes:
+      - "prowlarr.etc:/prowlarr/etc"
+    tmpfs:
+      # required for read-only image
+      - "/tmp:uid=1000,gid=1000"
+    ports:
+      - "9696:9696/tcp"
+    networks:
+      frontend:
+    restart: "always"
+
+volumes:
+  prowlarr.etc:
+
+networks:
+  frontend:

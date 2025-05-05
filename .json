@@ -1,0 +1,25 @@
+{
+  "image": "11notes/prowlarr",
+  "name": "prowlarr",
+  "root": "/prowlarr",
+  "build": {
+    "args": {
+      "version_build": "5034"
+    }
+  },
+  "semver": {
+    "version": "1.35.1"
+  },
+  "readme": {
+    "description": "Run Prowlarr smaller, lightweight and more secure",
+    "parent": {
+      "image": "11notes/alpine:stable"
+    },
+    "built": {
+      "prowlarr": "https://github.com/Prowlarr/Prowlarr"
+    },
+    "comparison": {
+      "image": "linuxserver/prowlarr:1.35.1"
+    }
+  }
+}
