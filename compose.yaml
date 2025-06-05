@@ -1,7 +1,7 @@
 name: "arrs"
 services:
   prowlarr:
-    image: "11notes/prowlarr:1.36.3"
+    image: "11notes/prowlarr:1.37.0"
     read_only: true
     environment:
       TZ: "Europe/Zurich"
