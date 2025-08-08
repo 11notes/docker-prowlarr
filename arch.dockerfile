@@ -1,60 +1,80 @@
-ARG APP_UID=1000
-ARG APP_GID=1000
+# ╔═════════════════════════════════════════════════════╗
+# ║                       SETUP                         ║
+# ╚═════════════════════════════════════════════════════╝
+# GLOBAL
+  ARG APP_UID=1000 \
+      APP_GID=1000
 
-# :: Util
+# :: FOREIGN IMAGES
   FROM 11notes/util AS util
+  FROM 11notes/util:bin AS util-bin
+  FROM 11notes/distroless:localhealth AS distroless-localhealth
 
-# :: Build
+
+# ╔═════════════════════════════════════════════════════╗
+# ║                       BUILD                         ║
+# ╚═════════════════════════════════════════════════════╝
+# :: PROWLARR
   FROM alpine AS build
-  ARG TARGETARCH
-  ARG APP_VERSION
-  ARG APP_VERSION_BUILD
-  ENV BUILD_ROOT=/Prowlarr
-  ENV BUILD_BIN=${BUILD_ROOT}/Prowlarr
-  USER root
-
-  COPY --from=util /usr/local/bin/ /usr/local/bin
+  COPY --from=util-bin / /
+  ARG TARGETARCH \
+      APP_VERSION \
+      APP_VERSION_BUILD \
+      BUILD_ROOT=/Prowlarr
+  ARG BUILD_BIN=${BUILD_ROOT}/Prowlarr
 
   RUN set -ex; \
     apk --update --no-cache add \
-      curl \
-      build-base \
-      upx; \
+      jq;
+
+  RUN set -ex; \
     case "${TARGETARCH}" in \
       "amd64") \
-        curl -SL https://github.com/Prowlarr/Prowlarr/releases/download/v${APP_VERSION}.${APP_VERSION_BUILD}/Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-x64.tar.gz | tar -zxC /; \
+        eleven github asset Prowlarr/Prowlarr v${APP_VERSION}.${APP_VERSION_BUILD} Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-x64.tar.gz; \
       ;; \
       "arm64") \
-        curl -SL https://github.com/Prowlarr/Prowlarr/releases/download/v${APP_VERSION}.${APP_VERSION_BUILD}/Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-${TARGETARCH}.tar.gz | tar -zxC /; \
+        eleven github asset Prowlarr/Prowlarr v${APP_VERSION}.${APP_VERSION_BUILD} Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-${TARGETARCH}.tar.gz; \
       ;; \
-    esac; \
+    esac;
+
+  RUN set -ex; \
     eleven strip ${BUILD_BIN}; \
-    find ${BUILD_ROOT} -type f -name '*.so' -exec strip -v {} &> /dev/null ';'; \
+    find ./ -type f -name "*.dll" -exec /usr/local/bin/upx -q --best --ultra-brute --no-backup {} &> /dev/null \; ;\
     mkdir -p /opt/prowlarr; \
     cp -R ${BUILD_ROOT}/* /opt/prowlarr; \
     rm -rf /opt/prowlarr/Prowlarr.Update;
 
-# :: Header
+    
+# ╔═════════════════════════════════════════════════════╗
+# ║                       IMAGE                         ║
+# ╚═════════════════════════════════════════════════════╝
+# :: HEADER
   FROM 11notes/alpine:stable
 
-  # :: arguments
-    ARG TARGETARCH
-    ARG APP_IMAGE
-    ARG APP_NAME
-    ARG APP_VERSION
-    ARG APP_ROOT
-    ARG APP_UID
-    ARG APP_GID
+  # :: default arguments
+    ARG TARGETPLATFORM \
+        TARGETOS \
+        TARGETARCH \
+        TARGETVARIANT \
+        APP_IMAGE \
+        APP_NAME \
+        APP_VERSION \
+        APP_ROOT \
+        APP_UID \
+        APP_GID \
+        APP_NO_CACHE
 
-  # :: environment
-    ENV APP_IMAGE=${APP_IMAGE}
-    ENV APP_NAME=${APP_NAME}
-    ENV APP_VERSION=${APP_VERSION}
-    ENV APP_ROOT=${APP_ROOT}
+  # :: default environment
+    ENV APP_IMAGE=${APP_IMAGE} \
+        APP_NAME=${APP_NAME} \
+        APP_VERSION=${APP_VERSION} \
+        APP_ROOT=${APP_ROOT}
 
   # :: multi-stage
-    COPY --from=util --chown=${APP_UID}:${APP_GID} /usr/local/bin/ /usr/local/bin
-    COPY --from=build --chown=${APP_UID}:${APP_GID} /opt/prowlarr /opt/prowlarr
+    COPY --from=distroless-localhealth / /
+    COPY --from=build /opt/prowlarr /opt/prowlarr
+    COPY --from=util / /
+    COPY ./rootfs /
 
 # :: Run
   USER root
@@ -67,17 +87,17 @@ ARG APP_GID=1000
       mkdir -p ${APP_ROOT}/etc;
 
   # :: copy filesystem changes and set correct permissions
-    COPY ./rootfs /
     RUN set -ex; \
       chmod +x -R /usr/local/bin; \
       chown -R ${APP_UID}:${APP_GID} \
         ${APP_ROOT};
 
-# :: Volumes
+# :: PERSISTENT DATA
   VOLUME ["${APP_ROOT}/etc"]
 
-# :: Monitor
-  HEALTHCHECK --interval=5s --timeout=2s CMD ["/usr/bin/curl", "-kILs", "--fail", "-o", "/dev/null", "http://localhost:9696/ping"]
+# :: MONITORING
+  HEALTHCHECK --interval=5s --timeout=2s --start-period=5s \
+    CMD ["/usr/local/bin/localhealth", "http://127.0.0.1:8989/ping"]
 
-# :: Start
+# :: EXECUTE
   USER ${APP_UID}:${APP_GID}
