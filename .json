@@ -5,11 +5,9 @@
   "build": {
     "args": {
       "version_build": "5076"
-      "version_build": "5076"
     }
   },
   "semver": {
-    "version": "1.37.0"
     "version": "1.37.0"
   },
   "readme": {
