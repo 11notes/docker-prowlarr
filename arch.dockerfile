@@ -97,7 +97,7 @@
 
 # :: MONITORING
   HEALTHCHECK --interval=5s --timeout=2s --start-period=5s \
-    CMD ["/usr/local/bin/localhealth", "http://127.0.0.1:8989/ping"]
+    CMD ["/usr/local/bin/localhealth", "http://127.0.0.1:9696/ping"]
 
 # :: EXECUTE
   USER ${APP_UID}:${APP_GID}
