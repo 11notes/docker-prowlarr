@@ -4,11 +4,11 @@
   "root": "/prowlarr",
   "build": {
     "args": {
-      "version_build": "5076"
+      "version_build": "5160"
     }
   },
   "semver": {
-    "version": "1.37.0"
+    "version": "2.0.5"
   },
   "readme": {
     "description": "Run Prowlarr smaller, lightweight and more secure",
