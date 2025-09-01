@@ -39,7 +39,7 @@
 
   RUN set -ex; \
     eleven strip ${BUILD_BIN}; \
-    find ./ -type f -name "*.dll" -exec /usr/local/bin/upx -q --best --ultra-brute --no-backup {} &> /dev/null \; ;\
+    find ./ -type f -name "*.dll" -exec eleven shrink "{}" \; ;\
     mkdir -p /opt/prowlarr; \
     cp -R ${BUILD_ROOT}/* /opt/prowlarr; \
     rm -rf /opt/prowlarr/Prowlarr.Update;
