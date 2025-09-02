@@ -3,48 +3,67 @@
 # ╚═════════════════════════════════════════════════════╝
 # GLOBAL
   ARG APP_UID=1000 \
-      APP_GID=1000
+      APP_GID=1000 \
+      BUILD_DOT_NET_VERSION=8.0.413 \
+      BUILD_SRC=Prowlarr/Prowlarr.git \
+      BUILD_ROOT=/Prowlarr
 
 # :: FOREIGN IMAGES
   FROM 11notes/util AS util
   FROM 11notes/util:bin AS util-bin
   FROM 11notes/distroless:localhealth AS distroless-localhealth
+  FROM 11notes/distroless:ds AS distroless-ds
 
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: PROWLARR
-  FROM alpine AS build
+  FROM 11notes/dotnetsdk:${BUILD_DOT_NET_VERSION} AS build
   COPY --from=util-bin / /
+  COPY --from=distroless-ds / /
   ARG TARGETARCH \
+      TARGETVARIANT \
       APP_VERSION \
       APP_VERSION_BUILD \
-      BUILD_ROOT=/Prowlarr
-  ARG BUILD_BIN=${BUILD_ROOT}/Prowlarr
+      BUILD_SRC \
+      BUILD_ROOT \
+      BUILD_DOT_NET_VERSION
+  ENV PROWLARRVERSION=${APP_VERSION}.${APP_VERSION_BUILD}
+
+  RUN set -ex; \
+    eleven git clone ${BUILD_SRC} v${APP_VERSION}.${APP_VERSION_BUILD};
+
+  RUN set -ex; \
+    echo '{"sdk":{"version":"'${BUILD_DOT_NET_VERSION}'"}}' > ${BUILD_ROOT}/global.json; \
+    cat ${BUILD_ROOT}/global.json;
 
   RUN set -ex; \
     apk --update --no-cache add \
-      jq;
+      yarn \
+      pnpm \
+      bash;
 
   RUN set -ex; \
-    case "${TARGETARCH}" in \
-      "amd64") \
-        eleven github asset Prowlarr/Prowlarr v${APP_VERSION}.${APP_VERSION_BUILD} Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-x64.tar.gz; \
-      ;; \
-      "arm64") \
-        eleven github asset Prowlarr/Prowlarr v${APP_VERSION}.${APP_VERSION_BUILD} Prowlarr.master.${APP_VERSION}.${APP_VERSION_BUILD}.linux-musl-core-${TARGETARCH}.tar.gz; \
-      ;; \
-    esac;
+    cd ${BUILD_ROOT}; \
+    case "${TARGETARCH}${TARGETVARIANT}" in \
+      "amd64") export TARGETARCH="x64";; \
+      "armv7") export TARGETVARIANT="";; \
+    esac; \
+    BUILD_DOT_NET_MAJOR_MINOR=$(echo "${BUILD_DOT_NET_VERSION}" | awk -F '.' '{print $1}').$(echo "${BUILD_DOT_NET_VERSION}" | awk -F '.' '{print $2}'); \
+    ./build.sh \
+      --backend \
+      --frontend \
+      --packages \
+      -f net${BUILD_DOT_NET_MAJOR_MINOR} \
+      -r linux-musl-${TARGETARCH}${TARGETVARIANT};
 
   RUN set -ex; \
-    eleven strip ${BUILD_BIN}; \
-    find ./ -type f -name "*.dll" -exec eleven shrink "{}" \; ;\
     mkdir -p /opt/prowlarr; \
-    cp -R ${BUILD_ROOT}/* /opt/prowlarr; \
-    rm -rf /opt/prowlarr/Prowlarr.Update;
+    cp -af ${BUILD_ROOT}/_output/net*/linux-musl-*/publish/. /opt/prowlarr; \
+    cp -af ${BUILD_ROOT}/_output/UI /opt/prowlarr;
 
-    
+
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
 # ╚═════════════════════════════════════════════════════╝
