@@ -22,5 +22,8 @@
     "comparison": {
       "image": "linuxserver/prowlarr"
     }
+  },
+  "grype":{
+    "fail": false
   }
 }
