@@ -10,7 +10,7 @@ Run Prowlarr smaller, lightweight and more secure
 Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports management of both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Lidarr, Mylar3, Radarr, Readarr, and Sonarr offering complete management of your indexers with no per app Indexer setup required (we do it all).
 
 # SYNOPSIS 📖
-**What can I do with this?** This image will give you a rootless and lightweight Prowlarr installation. Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports management of both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Lidarr, Mylar3, Radarr, Readarr, and Prowlarr offering complete management of your indexers with no per app Indexer setup required (we do it all).
+**What can I do with this?** This image will give you a rootless and lightweight Prowlarr installation directly compiled from source.
 
 # UNIQUE VALUE PROPOSITION 💶
 **Why should I run this image and not the other image(s) that already exist?** Good question! Because ...
@@ -126,4 +126,4 @@ docker pull quay.io/11notes/prowlarr:2.0.5
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-prowlarr/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-prowlarr/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-prowlarr/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 02.09.2025, 16:04:57 (CET)*
+*created 02.09.2025, 16:10:51 (CET)*
