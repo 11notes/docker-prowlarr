@@ -1,10 +1,11 @@
-${{ content_synopsis }} This image will give you a rootless and lightweight Prowlarr installation. Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports management of both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Lidarr, Mylar3, Radarr, Readarr, and Sonarr offering complete management of your indexers with no per app Indexer setup required (we do it all).
+${{ content_synopsis }} This image will give you a rootless and lightweight Prowlarr installation. Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports management of both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Lidarr, Mylar3, Radarr, Readarr, and Prowlarr offering complete management of your indexers with no per app Indexer setup required (we do it all).
 
 ${{ content_uvp }} Good question! Because ...
 
 ${{ github:> [!IMPORTANT] }}
 ${{ github:> }}* ... this image runs [rootless](https://github.com/11notes/RTFM/blob/main/linux/container/image/rootless.md) as 1000:1000
 ${{ github:> }}* ... this image is auto updated to the latest version via CI/CD
+${{ github:> }}* ... this image is built and compiled from source
 ${{ github:> }}* ... this image has a health check
 ${{ github:> }}* ... this image runs read-only
 ${{ github:> }}* ... this image is automatically scanned for CVEs before and after publishing
@@ -15,7 +16,7 @@ If you value security, simplicity and optimizations to the extreme, then this im
 
 ${{ content_comparison }}
 
-**Why is this image not distroless?** I would have loved to create a distroless, single binary image, sadly the way that Sonarr is setup makes it really difficult to compile a static binary from source. Enabling AOT breaks almost 30% of used libraries because they are not setup to be statically linked (like Assembly.GetExecutingAssembly().Location). It’s also not fixable with a single PR. This is something the Sonarr team would need to do.
+**Why is this image not distroless?** I would have loved to create a distroless, single binary image, sadly the way that Prowlarr is setup makes it really difficult to compile a static binary from source. Enabling AOT breaks almost 30% of used libraries because they are not setup to be statically linked (like Assembly.GetExecutingAssembly().Location). It’s also not fixable with a single PR. This is something the Prowlarr team would need to do.
 
 ${{ title_volumes }}
 * **${{ json_root }}/etc** - Directory of all your settings and database
