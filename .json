@@ -20,7 +20,7 @@
       "prowlarr": "https://github.com/Prowlarr/Prowlarr"
     },
     "comparison": {
-      "image": "linuxserver/prowlarr"
+      "images": ["linuxserver/prowlarr", "ghcr.io/hotio/prowlarr", "ghcr.io/home-operations/prowlarr:rolling"]
     }
   },
   "grype":{
