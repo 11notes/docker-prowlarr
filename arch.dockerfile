@@ -60,6 +60,9 @@
 
   RUN set -ex; \
     mkdir -p /opt/prowlarr; \
+    rm -f ${BUILD_ROOT}/_output/net*/linux-musl-*/publish/ServiceUninstall.*; \
+    rm -f ${BUILD_ROOT}/_output/net*/linux-musl-*/publish/ServiceInstall.*; \
+    rm -f ${BUILD_ROOT}/_output/net*/linux-musl-*/publish/Prowlarr.Windows.*; \
     cp -af ${BUILD_ROOT}/_output/net*/linux-musl-*/publish/. /opt/prowlarr; \
     cp -af ${BUILD_ROOT}/_output/UI /opt/prowlarr;
 
