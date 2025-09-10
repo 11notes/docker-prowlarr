@@ -1,4 +1,6 @@
-${{ content_synopsis }} This image will give you a rootless and lightweight Prowlarr installation directly compiled from source.
+${{ content_synopsis }} This image will give you a [rootless](https://github.com/11notes/RTFM/blob/main/linux/container/image/rootless.md) and lightweight Prowlarr installation for your adventures on the high seas *arrrr*!
+
+${{ content_arr_stack }}
 
 ${{ content_uvp }} Good question! Because ...
 
@@ -6,6 +8,7 @@ ${{ github:> [!IMPORTANT] }}
 ${{ github:> }}* ... this image runs [rootless](https://github.com/11notes/RTFM/blob/main/linux/container/image/rootless.md) as 1000:1000
 ${{ github:> }}* ... this image is auto updated to the latest version via CI/CD
 ${{ github:> }}* ... this image is built and compiled from source
+${{ github:> }}* ... this image supports 32bit architecture
 ${{ github:> }}* ... this image has a health check
 ${{ github:> }}* ... this image runs read-only
 ${{ github:> }}* ... this image is automatically scanned for CVEs before and after publishing
