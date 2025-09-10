@@ -10,7 +10,16 @@ Run Prowlarr smaller, lightweight and more secure
 Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports management of both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Lidarr, Mylar3, Radarr, Readarr, and Sonarr offering complete management of your indexers with no per app Indexer setup required (we do it all).
 
 # SYNOPSIS 📖
-**What can I do with this?** This image will give you a rootless and lightweight Prowlarr installation directly compiled from source.
+**What can I do with this?** This image will give you a [rootless](https://github.com/11notes/RTFM/blob/main/linux/container/image/rootless.md) and lightweight Prowlarr installation for your adventures on the high seas *arrrr*!
+
+# ARR STACK IMAGES 🏴‍☠️
+This image is part of the so called arr-stack (apps to pirate and manage media content). Here is the list of all it's companion apps for the best pirate experience:
+
+- [11notes/plex](https://github.com/11notes/docker-plex) - as your media server
+- [11notes/qbittorrent](https://github.com/11notes/docker-qbittorrent) - as your torrent client
+- [11notes/radarr](https://github.com/11notes/docker-radarr) - to manage your TV shows
+- [11notes/sabnzbd](https://github.com/11notes/docker-sabnzbd) - as your usenet client
+- [11notes/sonarr](https://github.com/11notes/docker-sonarr) - to manage your films
 
 # UNIQUE VALUE PROPOSITION 💶
 **Why should I run this image and not the other image(s) that already exist?** Good question! Because ...
@@ -19,6 +28,7 @@ Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base
 >* ... this image runs [rootless](https://github.com/11notes/RTFM/blob/main/linux/container/image/rootless.md) as 1000:1000
 >* ... this image is auto updated to the latest version via CI/CD
 >* ... this image is built and compiled from source
+>* ... this image supports 32bit architecture
 >* ... this image has a health check
 >* ... this image runs read-only
 >* ... this image is automatically scanned for CVEs before and after publishing
@@ -32,10 +42,10 @@ Below you find a comparison between this image and the most used or original one
 
 | **image** | **size on disk** | **init default as** | **[distroless](https://github.com/11notes/RTFM/blob/main/linux/container/image/distroless.md)** | supported architectures
 | ---: | ---: | :---: | :---: | :---: |
-| 11notes/prowlarr:2.0.5 | 173MB | 1000:1000 | ❌ | amd64, arm64, armv7 |
 | home-operations/prowlarr | 182MB | 65534:65533 | ❌ | amd64, arm64 |
 | linuxserver/prowlarr | 192MB | 0:0 | ❌ | amd64, arm64 |
 | hotio/prowlarr | 246MB | 0:0 | ❌ | amd64, arm64 |
+| 11notes/prowlarr:2.0.5 | 323MB | 1000:1000 | ❌ | amd64, arm64, armv7 |
 
 **Why is this image not distroless?** I would have loved to create a distroless, single binary image, sadly the way that Prowlarr is setup makes it really difficult to compile a static binary from source. Enabling AOT breaks almost 30% of used libraries because they are not setup to be statically linked (like Assembly.GetExecutingAssembly().Location). It’s also not fixable with a single PR. This is something the Prowlarr team would need to do.
 
@@ -126,4 +136,4 @@ docker pull quay.io/11notes/prowlarr:2.0.5
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-prowlarr/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-prowlarr/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-prowlarr/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 02.09.2025, 16:10:51 (CET)*
+*created 11.09.2025, 01:29:32 (CET)*
