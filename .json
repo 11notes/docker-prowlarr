@@ -4,11 +4,11 @@
   "root": "/prowlarr",
   "build": {
     "args": {
-      "version_build": "5160"
+      "version_build": "5216"
     }
   },
   "semver": {
-    "version": "2.0.5"
+    "version": "2.1.5"
   },
   "readme": {
     "description": "Run Prowlarr smaller, lightweight and more secure",
@@ -20,10 +20,14 @@
       "prowlarr": "https://github.com/Prowlarr/Prowlarr"
     },
     "comparison": {
-      "images": ["linuxserver/prowlarr", "ghcr.io/hotio/prowlarr", "ghcr.io/home-operations/prowlarr:rolling"]
+      "images": [
+        "linuxserver/prowlarr",
+        "ghcr.io/hotio/prowlarr",
+        "ghcr.io/home-operations/prowlarr:rolling"
+      ]
     }
   },
-  "grype":{
+  "grype": {
     "fail": false
   }
 }
