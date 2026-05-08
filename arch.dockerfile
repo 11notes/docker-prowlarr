@@ -4,7 +4,7 @@
 # GLOBAL
   ARG APP_UID=1000 \
       APP_GID=1000 \
-      BUILD_DOTNET_VERSION=9.0.304 \
+      APP_DOTNET9_VERSION=0 \
       BUILD_SRC=Prowlarr/Prowlarr.git \
       BUILD_ROOT=/Prowlarr \
       OPT_ROOT=/opt/prowlarr
@@ -20,7 +20,7 @@
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: PROWLARR
-  FROM 11notes/dotnetsdk:${BUILD_DOTNET_VERSION} AS build
+  FROM 11notes/dotnetsdk:${APP_DOTNET9_VERSION} AS build
   COPY --from=util-bin / /
   COPY --from=distroless-ds / /
   ARG TARGETARCH \
@@ -29,7 +29,7 @@
       APP_VERSION_BUILD \
       BUILD_SRC \
       BUILD_ROOT \
-      BUILD_DOTNET_VERSION \
+      APP_DOTNET9_VERSION \
       OPT_ROOT
 
   ENV PROWLARRVERSION=${APP_VERSION}.${APP_VERSION_BUILD} \
@@ -39,7 +39,7 @@
     eleven git clone ${BUILD_SRC} v${APP_VERSION}.${APP_VERSION_BUILD};
 
   RUN set -ex; \
-    echo '{"sdk":{"version":"'${BUILD_DOTNET_VERSION}'"}}' > ${BUILD_ROOT}/global.json; \
+    echo '{"sdk":{"version":"'${APP_DOTNET9_VERSION}'"}}' > ${BUILD_ROOT}/global.json; \
     sed -i 's#<TreatWarningsAsErrors>true</TreatWarningsAsErrors>#<TreatWarningsAsErrors>false</TreatWarningsAsErrors>#' ${BUILD_ROOT}/src/Directory.Build.props;
 
   RUN set -ex; \
