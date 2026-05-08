@@ -250,7 +250,7 @@ jobs:
             try{
               // wait 2.5s too not trigger 429 from github
               await new Promise(r => setTimeout(r, 2500));
-              const response = await fetch('https://raw.githubusercontent.com/11notes/static/refs/heads/master/src/semver/latest.json');
+              const response = await fetch('https://raw.githubusercontent.com/11notes/CICD/refs/heads/master/semver/latest.json');
               if(!response.ok){
                 throw new Error(`error fetching global versions: ${response.status}`);
               }
