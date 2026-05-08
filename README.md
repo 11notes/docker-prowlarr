@@ -3,7 +3,7 @@
 # PROWLARR
 ![size](https://img.shields.io/badge/image_size-177MB-green?color=%2338ad2d)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)![pulls](https://img.shields.io/docker/pulls/11notes/prowlarr?color=2b75d6)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)[<img src="https://img.shields.io/github/issues/11notes/docker-prowlarr?color=7842f5">](https://github.com/11notes/docker-prowlarr/issues)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)![swiss_made](https://img.shields.io/badge/Swiss_Made-FFFFFF?labelColor=FF0000&logo=data:image/svg%2bxml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0idHJhbnNwYXJlbnQiLz4KICA8cGF0aCBkPSJtMTMgNmg2djdoN3Y2aC03djdoLTZ2LTdoLTd2LTZoN3oiIGZpbGw9IiNmZmYiLz4KPC9zdmc+)
 
-run Prowlarr rootless
+run Prowlarr rootless.
 
 # INTRODUCTION 📢
 
@@ -107,6 +107,8 @@ To find out how you can change the default UID/GID of this container image, cons
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
 * [2.3.5](https://hub.docker.com/r/11notes/prowlarr/tags?name=2.3.5)
+* [2.3.5-unraid](https://hub.docker.com/r/11notes/prowlarr/tags?name=2.3.5-unraid)
+* [2.3.5-nobody](https://hub.docker.com/r/11notes/prowlarr/tags?name=2.3.5-nobody)
 
 ### There is no latest tag, what am I supposed to do about updates?
 It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:2.3.5``` you can use ```:2``` or ```:2.3```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
@@ -119,6 +121,12 @@ docker pull 11notes/prowlarr:2.3.5
 docker pull ghcr.io/11notes/prowlarr:2.3.5
 docker pull quay.io/11notes/prowlarr:2.3.5
 ```
+
+# UNRAID VERSION 🟠
+This image supports unraid by default. Simply add **-unraid** to any tag and the image will run as 99:100 instead of 1000:1000.
+
+# NOBODY VERSION 👻
+This image supports nobody by default. Simply add **-nobody** to any tag and the image will run as 65534:65534 instead of 1000:1000.
 
 # SOURCE 💾
 * [11notes/prowlarr](https://github.com/11notes/docker-prowlarr)
@@ -138,4 +146,4 @@ docker pull quay.io/11notes/prowlarr:2.3.5
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-prowlarr/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-prowlarr/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-prowlarr/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 09.04.2026, 23:33:38 (CET)*
+*created 08.05.2026, 11:39:44 (CET)*
