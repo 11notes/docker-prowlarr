@@ -31,7 +31,7 @@ jobs:
           ref: 'master'
           fetch-depth: 0
 
-      - name: get latest version and last tag
+      - name: get latest version and build
         run: |
           LATEST=$(curl -s https://api.github.com/repos/Prowlarr/Prowlarr/releases/latest | jq -r '.tag_name' | sed 's|v||')
           echo "LATEST_VERSION=$(echo ${LATEST} | awk -F "." '{print $1"."$2"."$3}')" >> "${GITHUB_ENV}"
