@@ -2,6 +2,8 @@
   "image": "11notes/prowlarr",
   "name": "prowlarr",
   "root": "/prowlarr",
+  "unraid": true,
+  "nobody": true,
   "build": {
     "args": {
       "version_build": "5327"
