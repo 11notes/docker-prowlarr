@@ -33,12 +33,14 @@ jobs:
 
       - name: get latest version and last tag
         run: |
-          LATEST_VERSION=$(curl -s https://api.github.com/repos/Prowlarr/Prowlarr/releases/latest | jq -r '.tag_name' | sed 's|v||')
+          echo "LATEST_VERSION=$(curl -s https://api.github.com/repos/Prowlarr/Prowlarr/releases/latest | jq -r '.tag_name' | sed 's|v||')" >> "${GITHUB_ENV}"
+          echo "LATEST_BUILD=$(echo ${LATEST_VERSION} | awk -F "." '{print $NF}')" >> "${GITHUB_ENV}"
 
       - name: check if updated is needed
-        uses: 11notes/actions/update@v1  # v1
+        uses: 11notes/actions/update@v1 # v1
         with:
           latest: ${{ env.LATEST_VERSION }}
+          build: ${{ env.LATEST_BUILD }}
 
       - name: call org.update
         if: env.ACTIONS_UPDATE == 'true'
