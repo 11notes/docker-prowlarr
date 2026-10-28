@@ -4,9 +4,9 @@
   "root": "/prowlarr",
   "unraid": true,
   "nobody": true,
-  "build": "5623",
+  "build": "5723",
   "semver": {
-    "version": "2.6.5"
+    "version": "2.7.0"
   },
   "readme": {
     "description": "run Prowlarr rootless.",
