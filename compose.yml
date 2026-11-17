@@ -9,7 +9,7 @@ x-lockdown: &lockdown
 
 services:
   prowlarr:
-    image: "11notes/prowlarr:2.7.0"
+    image: "11notes/prowlarr:3.0.2"
     <<: *lockdown
     environment:
       TZ: "Europe/Zurich"
